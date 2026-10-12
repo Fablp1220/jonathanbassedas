@@ -1,29 +1,61 @@
+
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Learn Academy</title>
-		<link rel="stylesheet" href="style.css">
-		<meta name="viewport" content="width=device-width">
-		<script>
-		function jumpScare() {
-			var audio = document.getElementById("audio");
-			audio.muted = false; // Ensure audio is unmuted
-			audio.play(); // Play the scream sound
-			document.getElementById("scareImage").style.display = "block"; // Show the scare image
-		}
-		</script>
-	</head>
-	<body>
-		<div id="content">
-			<h1>Learn Academy</h1>
-			<p>Free courses will be given! Click the button below to claim.</p>
-			<div id="click">
-				<input type="button" value="Click Here" onclick="jumpScare();">
-			</div>
-		</div>
-		<div id="scareImage" style="display: none;">
-			<img src="jsssss.mp4" alt="Scare Image">
-		</div>
-		<audio id="audio" src="scream2.mp3" muted></audio> <!-- Start muted -->
-	</body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="content">
+        <h1>Learn Academy</h1>
+        <p>Free courses will be given! Click the button below to claim.</p>
+
+        <div id="click">
+            <input type="button" value="Click Here" onclick="jumpScare()">
+        </div>
+    </div>
+
+    <div id="scareImage" style="display: none;">
+        <video id="scareVideo" playsinline controls preload="auto">
+            <source src="jsssss.mp4" type="video/mp4">
+            Your browser does not support video playback.
+        </video>
+    </div>
+
+    <audio id="audio" src="scream2.mp3" preload="auto"></audio>
+
+    <script>
+        function jumpScare() {
+            const container = document.getElementById("scareImage");
+            const video = document.getElementById("scareVideo");
+            const audio = document.getElementById("audio");
+
+            // Show the video
+            container.style.display = "block";
+
+            // Start the video from the beginning
+            video.currentTime = 0;
+
+            // Play both files when the button is clicked
+            const videoPromise = video.play();
+            const audioPromise = audio.play();
+
+            if (videoPromise) {
+                videoPromise.catch(error => {
+                    console.error("Video playback failed:", error);
+                });
+            }
+
+            if (audioPromise) {
+                audioPromise.catch(error => {
+                    console.error("Audio playback failed:", error);
+                });
+            }
+        }
+    </script>
+
+</body>
 </html>
